@@ -1,10 +1,12 @@
 #include <Dynamixel2Arduino.h>
+#include <actuator.h>
 
-#if defined(ARDUINO_OpenCM904)  // When using official ROBOTIS board with DXL circuit.
-#define DXL_SERIAL Serial3      //OpenCM9.04 EXP Board's DXL port Serial. (Serial1 for the DXL port on the OpenCM 9.04 board)
-#define DEBUG_SERIAL Serial
-const int DXL_DIR_PIN = 22;  //OpenCM9.04 EXP Board's DIR PIN. (28 for the DXL port on the OpenCM 9.04 board)
+#if defined(ARDUINO_OpenCM904) // When using official ROBOTIS board with DXL circuit.
+  #define DXL_SERIAL   Serial3 //OpenCM9.04 EXP Board's DXL port Serial. (Serial1 for the DXL port on the OpenCM 9.04 board)
+  #define DEBUG_SERIAL Serial
+  const int DXL_DIR_PIN = 22; //OpenCM9.04 EXP Board's DIR PIN. (28 for the DXL port on the OpenCM 9.04 board)
 #endif
+ 
 
 const uint8_t DXL_ID_1 = 1;
 const uint8_t DXL_ID_2 = 2;
@@ -48,8 +50,7 @@ void setup() {
 
   // Use UART port of DYNAMIXEL Shield to debug.
   DEBUG_SERIAL.begin(115200);
-  while (!DEBUG_SERIAL)
-    ;
+  while(!DEBUG_SERIAL);
 
   // Set Port baudrate to 57600bps. This has to match with DYNAMIXEL baudrate.
   dxl.begin(1000000);
@@ -57,63 +58,182 @@ void setup() {
   dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
   // Get DYNAMIXEL information
 
-  for (uint8_t j = 0; j < 6; j++) {
+  // for (uint8_t j = 0; j < 6; j++) {
 
-    if (dxl.ping(left_leg[j])) {
-      DEBUG_SERIAL.println("ping success");
-    } else {
-      DEBUG_SERIAL.println("FUCK U");
-    }
+  //   if (dxl.ping(left_leg[j])) {
+  //     DEBUG_SERIAL.println("ping success");
+  //   } else {
+  //     DEBUG_SERIAL.println("FUCK U");
+  //   }
 
-    // Turn off torque when configuring items in EEPROM area
-    dxl.torqueOff(left_leg[j]);
-    dxl.setOperatingMode(left_leg[j], OP_POSITION);
-    dxl.torqueOn(left_leg[j]);
+  //   // Turn off torque when configuring items in EEPROM area
+  //   dxl.torqueOff(left_leg[j]);
+  //   delay(10);
+  //   dxl.setOperatingMode(left_leg[j], OP_POSITION);
+  //   delay(10);
+  //   dxl.torqueOn(left_leg[j]);
+  //   delay(10);
 
-    // Limit the maximum velocity in Position Control Mode. Use 0 for Max speed
-    dxl.writeControlTableItem(81, left_leg[j], 30);  // 81 is register adress for velocity
+  //   // Limit the maximum velocity in Position Control Mode. Use 0 for Max speed
+  //   dxl.writeControlTableItem(81, left_leg[j], 30);  // 81 is register adress for velocity
 
-    if (dxl.ping(right_leg[j])) {
-      DEBUG_SERIAL.println("ping success");
-    } else {
-      DEBUG_SERIAL.println("FUCK U");
-    }
+  //   if (dxl.ping(right_leg[j])) {
+  //     DEBUG_SERIAL.println("ping success");
+  //   } else {
+  //     DEBUG_SERIAL.println("FUCK U");
+  //   }
 
-    // Turn off torque when configuring items in EEPROM area
-    dxl.torqueOff(right_leg[j]);
-    dxl.setOperatingMode(right_leg[j], OP_POSITION);
-    dxl.torqueOn(right_leg[j]);
+  //   // Turn off torque when configuring items in EEPROM area
+  //   dxl.torqueOff(right_leg[j]);
+  //   delay(10);
+  //   dxl.setOperatingMode(right_leg[j], OP_POSITION);
+  //   delay(10);
+  //   dxl.torqueOn(right_leg[j]);
+  //   delay(10);
 
-    // Limit the maximum velocity in Position Control Mode. Use 0 for Max speed
-    dxl.writeControlTableItem(81, right_leg[j], 30);  // 81 is register adress for velocity
-  }
+  //   // Limit the maximum velocity in Position Control Mode. Use 0 for Max speed
+  //   dxl.writeControlTableItem(81, right_leg[j], 30);  // 81 is register adress for velocity
+  // }
 
   dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
+  dxl.ping(1);
+  dxl.torqueOff(1);
+  delay(10);
+  dxl.setOperatingMode(1, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(1);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 1, 30);
+
+  dxl.ping(2);
+  dxl.torqueOff(2);
+  delay(10);
+  dxl.setOperatingMode(2, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(2);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 2, 30);
+
+  dxl.ping(3);
+  dxl.torqueOff(3);
+  delay(10);
+  dxl.setOperatingMode(3, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(3);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 3, 30);
+
+  dxl.ping(4);
+  dxl.torqueOff(4);
+  delay(10);
+  dxl.setOperatingMode(4, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(4);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 4, 30);
+
+  dxl.ping(5);
+  dxl.torqueOff(5);
+  delay(10);
+  dxl.setOperatingMode(5, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(5);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 5, 30);
+
+  dxl.ping(6);
+  dxl.torqueOff(6);
+  delay(10);
+  dxl.setOperatingMode(6, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(6);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 6, 30);
+
+  dxl.ping(20);
+  dxl.torqueOff(20);
+  delay(10);
+  dxl.setOperatingMode(20, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(20);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 20, 30);
+
+  dxl.ping(19);
+  dxl.torqueOff(19);
+  delay(10);
+  dxl.setOperatingMode(19, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(19);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 19, 30);
+
+  dxl.ping(18);
+  dxl.torqueOff(18);
+  delay(10);
+  dxl.setOperatingMode(18, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(18);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 18, 30);
+
+  dxl.ping(17);
+  dxl.torqueOff(17);
+  delay(10);
+  dxl.setOperatingMode(17, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(17);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 17, 30);
+
+  dxl.ping(16);
+  dxl.torqueOff(16);
+  delay(10);
+  dxl.setOperatingMode(16, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(16);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 16, 30);
+
+  dxl.ping(15);
+  dxl.torqueOff(15);
+  delay(10);
+  dxl.setOperatingMode(15, OP_POSITION);
+  delay(10);
+  dxl.torqueOn(15);
+  delay(10);
+  dxl.writeControlTableItem(PROFILE_VELOCITY, 15, 30);
+
   dxl.ping(12);
   dxl.torqueOff(12);
+  delay(10);
   dxl.setOperatingMode(12, OP_POSITION);
+  delay(10);
   dxl.torqueOn(12);
+  delay(10);
   dxl.writeControlTableItem(PROFILE_VELOCITY, 12, 30);
 
-  dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
   dxl.ping(14);
   dxl.torqueOff(14);
+  delay(10);
   dxl.setOperatingMode(14, OP_POSITION);
+  delay(10);
   dxl.torqueOn(14);
+  delay(10);
   dxl.writeControlTableItem(PROFILE_VELOCITY, 14, 30);
 
 }
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly:delay(10);
 
   for (uint8_t i = 0; i < 6; i++) {
     dxl.setGoalPosition(left_leg[i], stand_ll[i]);
     dxl.setGoalPosition(right_leg[i], stand_rl[i]);
   }
 
- // hello();
+  hello();
 }
 
 void hello() {
